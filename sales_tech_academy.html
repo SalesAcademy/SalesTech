@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Tech Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F2EE;
+    --ink: #0A0A0A;
+    --ink-soft: #3A3A3A;
+    --muted: #767676;
+    --muted-2: #A8A8A8;
+    --line: #DDDBD5;
+    --line-soft: #E8E6E0;
+    --white: #FFFFFF;
+    --yellow: #F4D44A;
+    --taupe: #C4B5A2;
+    --pink: #F3B4D1;
+    --blue: #93A8D5;
+    --olive: #7F8D51;
+    --lavender: #BCA7D4;
+    --terracotta: #D49A7A;
+    --red: #D64545;
+    --green: #5B8C4F;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Hanken Grotesk', -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .display { font-weight: 900; letter-spacing: -0.04em; }
+  .caps { text-transform: uppercase; letter-spacing: 0.14em; font-size: 11px; font-weight: 600; }
+  button { font-family: inherit; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 28px 120px; }
+
+  /* TOP META BAR */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    letter-spacing: -0.01em;
+  }
+  .topbar .brand { display: flex; align-items: center; gap: 10px; }
+  .topbar .brand .slash { color: var(--muted-2); font-weight: 400; }
+  .topbar .meta { color: var(--muted); font-weight: 500; display: flex; gap: 16px; }
+  .topbar .meta .sep { color: var(--muted-2); }
+
+  /* NAV */
+  nav {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 48px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 10px 18px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+  .tab:hover { color: var(--ink); background: var(--line-soft); }
+  .tab.active { background: var(--ink); color: var(--bg); }
+
+  .view { display: none; animation: fade 0.3s ease; }
+  .view.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* HERO */
+  .hero {
+    margin-bottom: 48px;
+  }
+  .hero-eyebrow { color: var(--muted); margin-bottom: 18px; }
+  .hero h1 {
+    font-weight: 900;
+    font-size: 88px;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+  .hero h1 .highlight {
+    background: var(--yellow);
+    padding: 0 12px;
+    display: inline-block;
+    line-height: 1;
+    margin: 0 -6px;
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-stat .num {
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+  }
+  .hero-stat .lbl {
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .section-label h2 {
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+  }
+  .section-label .counter { color: var(--muted); }
+
+  /* BAND LIST (signature layout) */
+  .bands {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 52px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .band {
+    display: grid;
+    grid-template-columns: 80px 1fr auto 72px;
+    align-items: center;
+    gap: 20px;
+    padding: 26px 28px;
+    background: var(--yellow);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    color: var(--ink);
+    width: 100%;
+    min-height: 120px;
+    position: relative;
+  }
+  .band:hover { filter: brightness(1.03); }
+  .band:active { transform: scale(0.998); }
+
+  .band-c-yellow { background: var(--yellow); }
+  .band-c-taupe { background: var(--taupe); }
+  .band-c-pink { background: var(--pink); }
+  .band-c-blue { background: var(--blue); }
+  .band-c-olive { background: var(--olive); color: var(--white); }
+  .band-c-lavender { background: var(--lavender); }
+  .band-c-terracotta { background: var(--terracotta); }
+
+  .band-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.1);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .band-c-olive .band-num { background: rgba(255,255,255,0.18); color: var(--white); }
+
+  .band-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .band-title {
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .band-subtitle {
+    font-weight: 500;
+    font-size: 14px;
+    opacity: 0.65;
+    margin-top: 2px;
+  }
+
+  .band-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .band-meta {
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .band-status {
+    font-weight: 500;
+    font-size: 12px;
+    opacity: 0.6;
+  }
+
+  .band-icon {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+  }
+  .band-icon svg { width: 100%; height: 100%; }
+
+  @media (max-width: 720px) {
+    .band { grid-template-columns: 48px 1fr 44px; gap: 14px; padding: 20px 18px; min-height: 92px; }
+    .band-num { width: 36px; height: 36px; font-size: 13px; }
+    .band-title { font-size: 28px; }
+    .band-subtitle { font-size: 12px; }
+    .band-right { display: none; }
+    .band-icon { width: 40px; height: 40px; }
+  }
+
+  /* PLAYER FOOTER */
+  .player {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid var(--line-soft);
+    margin-bottom: 20px;
+  }
+  .player .play-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: transform 0.15s;
+  }
+  .player .play-btn:hover { transform: scale(1.05); }
+  .player .play-btn svg { width: 18px; height: 18px; }
+  .player .counter {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    flex-shrink: 0;
+    min-width: 110px;
+  }
+  .player .counter .big { font-weight: 900; font-size: 34px; letter-spacing: -0.03em; }
+  .player .counter .total { color: var(--muted); font-weight: 600; font-size: 16px; }
+  .player .ruler {
+    flex: 1;
+    height: 20px;
+    position: relative;
+    background-image: repeating-linear-gradient(90deg, var(--muted-2) 0 1px, transparent 1px 12px);
+    background-size: 12px 8px;
+    background-position: 0 50%;
+    background-repeat: repeat-x;
+    background-clip: content-box;
+    padding: 6px 0;
+  }
+  .player .ruler-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--ink);
+    opacity: 0.15;
+    height: 100%;
+    transition: width 0.5s ease;
+  }
+  .player .ruler-cursor {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--ink);
+    transition: left 0.5s ease;
+  }
+
+  @media (max-width: 620px) {
+    .player { padding: 16px; gap: 14px; }
+    .player .play-btn { width: 44px; height: 44px; }
+    .player .counter { min-width: 80px; }
+    .player .counter .big { font-size: 26px; }
+    .player .counter .total { font-size: 13px; }
+  }
+
+  /* VIEW HEADERS */
+  .view-header {
+    margin-bottom: 40px;
+  }
+  .view-header .eyebrow { color: var(--muted); margin-bottom: 14px; }
+  .view-header h2 {
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    margin-bottom: 12px;
+  }
+  .view-header .sub {
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 500;
+    max-width: 600px;
+  }
+  .view-header .actions { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn {
+    padding: 14px 22px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: all 0.18s ease;
+  }
+  .btn:hover { transform: translateY(-1px); background: #1a1a1a; }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn-ghost:hover { background: var(--white); border-color: var(--ink); }
+  .btn-big { padding: 18px 30px; font-size: 14px; border-radius: 999px; }
+
+  /* CATEGORY PILLS */
+  .cats { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .cat-pill {
+    padding: 8px 14px;
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    color: var(--ink);
+  }
+  .cat-pill:hover { border-color: var(--ink); }
+  .cat-pill.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  /* QUIZ CARD */
+  .quiz-wrap {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 48px 52px;
+    max-width: 820px;
+    margin: 0 auto;
+    border: 1px solid var(--line-soft);
+  }
+  .quiz-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .quiz-progress .cat-tag {
+    padding: 4px 10px;
+    background: var(--yellow);
+    border-radius: 4px;
+    color: var(--ink);
+  }
+  .quiz-progress .counter { color: var(--muted); }
+
+  .quiz-question {
+    font-weight: 900;
+    font-size: 38px;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin-bottom: 36px;
+  }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .quiz-option {
+    background: var(--bg);
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 18px 22px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    line-height: 1.35;
+  }
+  .quiz-option:hover:not(:disabled) { border-color: var(--ink); background: var(--white); }
+  .quiz-option .letter {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 13px;
+    background: var(--white);
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+  }
+  .quiz-option:hover:not(:disabled) .letter { background: var(--yellow); }
+  .quiz-option.correct { background: #E8F0E0; border-color: var(--green); }
+  .quiz-option.correct .letter { background: var(--green); color: var(--white); }
+  .quiz-option.wrong { background: #F8E2E2; border-color: var(--red); opacity: 0.85; }
+  .quiz-option.wrong .letter { background: var(--red); color: var(--white); }
+  .quiz-option:disabled { cursor: default; }
+
+  .feedback {
+    padding: 20px 24px;
+    border-radius: 14px;
+    margin-bottom: 28px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .feedback.ok { background: #E8F0E0; }
+  .feedback.ko { background: #F8E2E2; }
+  .feedback strong { color: var(--ink); font-weight: 800; }
+
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+  /* FLASHCARDS */
+  .flash-wrap { max-width: 680px; margin: 0 auto; }
+  .flash-counter {
+    text-align: center;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 28px;
+    font-size: 14px;
+  }
+  .flash-counter .big {
+    font-weight: 900;
+    font-size: 32px;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    margin: 0 4px;
+  }
+
+  .fc-scene { perspective: 1400px; margin-bottom: 28px; }
+  .fc {
+    width: 100%;
+    height: 380px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+  .fc.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 24px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .fc-front { background: var(--pink); }
+  .fc-back { background: var(--ink); color: var(--bg); transform: rotateY(180deg); }
+  .fc-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .fc-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.12);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .fc-back .fc-num { background: rgba(255,255,255,0.15); color: var(--bg); }
+  .fc-tag { font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; }
+  .fc-term {
+    font-weight: 900;
+    font-size: 76px;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+  }
+  .fc-def {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+  .fc-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .fc-hint { font-size: 12px; opacity: 0.55; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .rating { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .rating-btn {
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 2px solid var(--ink);
+    background: var(--white);
+    color: var(--ink);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+    transition: all 0.18s;
+    letter-spacing: -0.01em;
+  }
+  .rating-btn:hover { background: var(--ink); color: var(--bg); transform: translateY(-1px); }
+  .rating-btn.easy:hover { background: var(--olive); border-color: var(--olive); color: var(--white); }
+  .rating-btn.hard:hover { background: var(--red); border-color: var(--red); }
+
+  /* FRAMEWORKS */
+  .fw-drill {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 48px 52px;
+    max-width: 820px;
+    margin: 0 auto;
+    border: 1px solid var(--line-soft);
+  }
+  .fw-drill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+    gap: 20px;
+  }
+  .fw-drill-title {
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+  }
+  .fw-drill-sub { color: var(--muted); font-weight: 500; font-size: 15px; margin-top: 8px; max-width: 420px; }
+
+  .fw-row {
+    display: flex;
+    gap: 18px;
+    padding: 20px;
+    background: var(--bg);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+  .fw-badge {
+    width: 64px;
+    height: 64px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 32px;
+    letter-spacing: -0.04em;
+    flex-shrink: 0;
+  }
+  .fw-content { flex: 1; }
+  .fw-hint-label { color: var(--muted); margin-bottom: 4px; }
+  .fw-hint-text { color: var(--ink-soft); font-weight: 500; font-size: 13.5px; margin-bottom: 10px; line-height: 1.4; }
+  .fw-content input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--line);
+    color: var(--ink);
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 22px;
+    padding: 6px 0;
+    outline: none;
+    letter-spacing: -0.02em;
+  }
+  .fw-content input:focus { border-bottom-color: var(--ink); }
+  .fw-content input::placeholder { color: var(--muted-2); font-weight: 600; }
+  .fw-content input.correct { color: var(--green); border-bottom-color: var(--green); }
+  .fw-content input.wrong { color: var(--red); border-bottom-color: var(--red); }
+  .fw-reveal {
+    display: none;
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: #E8F0E0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .fw-reveal.show { display: block; }
+  .fw-reveal strong { color: var(--green); font-weight: 800; }
+
+  /* OBJECTIONS */
+  .scenario-wrap {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 48px 52px;
+    max-width: 860px;
+    margin: 0 auto;
+    border: 1px solid var(--line-soft);
+  }
+  .prospect-box {
+    background: var(--ink);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-bottom: 32px;
+    color: var(--bg);
+  }
+  .prospect-box .speaker {
+    color: var(--red);
+    margin-bottom: 14px;
+  }
+  .prospect-box .quote {
+    font-weight: 900;
+    font-size: 32px;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  .scenario-responses { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .scenario-response {
+    background: var(--bg);
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 20px 24px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.45;
+    width: 100%;
+  }
+  .scenario-response:hover:not(:disabled) { border-color: var(--ink); background: var(--white); }
+  .scenario-response.correct { background: #E8F0E0; border-color: var(--green); }
+  .scenario-response.wrong { background: #F8E2E2; border-color: var(--red); opacity: 0.8; }
+  .scenario-label { color: var(--muted); margin-bottom: 14px; }
+
+  /* RESULTS */
+  .results-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 64px 40px 52px;
+    max-width: 520px;
+    margin: 40px auto;
+    text-align: center;
+    border: 1px solid var(--line-soft);
+  }
+  .results-score {
+    font-weight: 900;
+    font-size: 160px;
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+  }
+  .results-score .denom { color: var(--muted-2); font-size: 72px; font-weight: 700; }
+  .results-label {
+    font-weight: 900;
+    font-size: 28px;
+    margin: 20px 0 10px;
+    letter-spacing: -0.03em;
+  }
+  .results-sub { color: var(--muted); margin-bottom: 32px; font-weight: 500; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(140px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-weight: 700;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index: 1000;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .empty-state { text-align: center; padding: 80px 20px; color: var(--muted); }
+  .empty-state .big { font-weight: 900; font-size: 48px; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.04em; }
+  .sr { color: var(--muted); font-size: 13px; font-weight: 500; }
+
+  @media (max-width: 620px) {
+    .container { padding: 18px 18px 120px; }
+    .hero h1 { font-size: 54px; }
+    .hero p { font-size: 15px; }
+    .hero-stat .num { font-size: 40px; }
+    .view-header h2 { font-size: 44px; }
+    .quiz-wrap, .scenario-wrap, .fw-drill { padding: 28px 22px; }
+    .quiz-question { font-size: 26px; }
+    .prospect-box .quote { font-size: 22px; }
+    .fw-drill-title { font-size: 42px; }
+    .fc { height: 300px; }
+    .fc-face { padding: 28px; }
+    .fc-term { font-size: 48px; }
+    .fc-def { font-size: 17px; }
+    .results-score { font-size: 100px; }
+    .results-score .denom { font-size: 50px; }
+    .fw-badge { width: 52px; height: 52px; font-size: 24px; }
+    .fw-content input { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG SPRITE -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Target / Quiz -->
+    <symbol id="i-quiz" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="22" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <circle cx="30" cy="30" r="13" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <circle cx="30" cy="30" r="4" fill="currentColor"/>
+    </symbol>
+    <!-- Cards stacked -->
+    <symbol id="i-cards" viewBox="0 0 60 60">
+      <rect x="12" y="18" width="30" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(-7 27 31)"/>
+      <rect x="18" y="16" width="30" height="26" rx="2" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="24" y1="24" x2="42" y2="24" stroke="currentColor" stroke-width="2"/>
+      <line x1="24" y1="30" x2="38" y2="30" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    <!-- Compass -->
+    <symbol id="i-compass" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="22" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M30 14 L35 30 L30 46 L25 30 Z" fill="currentColor"/>
+    </symbol>
+    <!-- Crossed sabres -->
+    <symbol id="i-sabres" viewBox="0 0 60 60">
+      <line x1="14" y1="14" x2="46" y2="46" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <line x1="46" y1="14" x2="14" y2="46" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="14" cy="14" r="4" fill="currentColor"/>
+      <circle cx="46" cy="14" r="4" fill="currentColor"/>
+    </symbol>
+    <!-- Document / Scroll -->
+    <symbol id="i-doc" viewBox="0 0 60 60">
+      <rect x="16" y="10" width="28" height="40" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="22" y1="20" x2="38" y2="20" stroke="currentColor" stroke-width="2"/>
+      <line x1="22" y1="28" x2="38" y2="28" stroke="currentColor" stroke-width="2"/>
+      <line x1="22" y1="36" x2="32" y2="36" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    <!-- Arrow right (circle) -->
+    <symbol id="i-arrow" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M8 12 H16 M13 9 L16 12 L13 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- Play -->
+    <symbol id="i-play" viewBox="0 0 24 24">
+      <polygon points="7,4 7,20 20,12" fill="currentColor"/>
+    </symbol>
+    <!-- Home (simple square) -->
+    <symbol id="i-back" viewBox="0 0 24 24">
+      <path d="M16 4 L8 12 L16 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="container">
+
+  <div class="topbar">
+    <div class="brand">S/TA <span class="slash">/</span> Sales Tech Academy</div>
+    <div class="meta"><span>BDR · SDR</span><span class="sep">·</span><span>Rev. 001</span></div>
+  </div>
+
+  <nav>
+    <button class="tab active" data-view="dashboard">Accueil</button>
+    <button class="tab" data-view="quiz">Quiz</button>
+    <button class="tab" data-view="flashcards">Flashcards</button>
+    <button class="tab" data-view="frameworks">Frameworks</button>
+    <button class="tab" data-view="objections">Objections</button>
+    <button class="tab" data-view="scripts">Scripts</button>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <div class="view active" id="view-dashboard">
+    <div class="hero">
+      <div class="hero-eyebrow caps">— Leçon 001</div>
+      <h1>Apprendre le métier de <span class="highlight">BDR</span> à la manière d'un bon élève.</h1>
+      <p>Un quiz classé par thème, des flashcards pour le vocabulaire, les sept méthodes à maîtriser, des scénarios d'objections réalistes. Chaque progrès consigné.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num" id="stat-xp">0</div><div class="lbl caps">Points</div></div>
+        <div class="hero-stat"><div class="num" id="stat-streak">0</div><div class="lbl caps">Série</div></div>
+        <div class="hero-stat"><div class="num" id="stat-mastery">0%</div><div class="lbl caps">Maîtrise</div></div>
+      </div>
+    </div>
+
+    <div class="section-label">
+      <h2>Les modules</h2>
+      <div class="counter caps" id="modules-count">5 chapitres</div>
+    </div>
+
+    <div class="bands">
+      <button class="band band-c-yellow" onclick="switchView('quiz')">
+        <div class="band-num">01</div>
+        <div class="band-titles">
+          <div class="band-title">Le Quiz</div>
+          <div class="band-subtitle">Rôles · Frameworks · Prospection · Objections · Psycho</div>
+        </div>
+        <div class="band-right">
+          <div class="band-meta">30 questions</div>
+          <div class="band-status" id="stat-quiz">À démarrer</div>
+        </div>
+        <div class="band-icon"><svg><use href="#i-quiz"/></svg></div>
+      </button>
+      <button class="band band-c-pink" onclick="switchView('flashcards')">
+        <div class="band-num">02</div>
+        <div class="band-titles">
+          <div class="band-title">Flashcards</div>
+          <div class="band-subtitle">Vocabulaire essentiel · ICP, MEDDIC, ARR, champion…</div>
+        </div>
+        <div class="band-right">
+          <div class="band-meta">30 cartes</div>
+          <div class="band-status" id="stat-flash">À démarrer</div>
+        </div>
+        <div class="band-icon"><svg><use href="#i-cards"/></svg></div>
+      </button>
+      <button class="band band-c-blue" onclick="switchView('frameworks')">
+        <div class="band-num">03</div>
+        <div class="band-titles">
+          <div class="band-title">Frameworks</div>
+          <div class="band-subtitle">BANT, MEDDIC, SPICED, SPIN, Challenger, AIDA, Cialdini</div>
+        </div>
+        <div class="band-right">
+          <div class="band-meta">7 méthodes</div>
+          <div class="band-status" id="stat-fw">À démarrer</div>
+        </div>
+        <div class="band-icon"><svg><use href="#i-compass"/></svg></div>
+      </button>
+      <button class="band band-c-olive" onclick="switchView('objections')">
+        <div class="band-num">04</div>
+        <div class="band-titles">
+          <div class="band-title">Objections</div>
+          <div class="band-subtitle">Six scénarios réalistes · escrime commerciale</div>
+        </div>
+        <div class="band-right">
+          <div class="band-meta">6 scénarios</div>
+          <div class="band-status" id="stat-obj">À démarrer</div>
+        </div>
+        <div class="band-icon"><svg><use href="#i-sabres"/></svg></div>
+      </button>
+      <button class="band band-c-taupe" onclick="switchView('scripts')">
+        <div class="band-num">05</div>
+        <div class="band-titles">
+          <div class="band-title">Scripts</div>
+          <div class="band-subtitle">Cold call, discovery call, séquence multicanale</div>
+        </div>
+        <div class="band-right">
+          <div class="band-meta">3 structures</div>
+          <div class="band-status" id="stat-script">À démarrer</div>
+        </div>
+        <div class="band-icon"><svg><use href="#i-doc"/></svg></div>
+      </button>
+    </div>
+
+    <div class="player">
+      <button class="play-btn" onclick="switchView('quiz')" aria-label="Commencer"><svg><use href="#i-play"/></svg></button>
+      <div class="counter">
+        <span class="big" id="player-done">00</span>
+        <span class="total">/<span id="player-total">76</span></span>
+      </div>
+      <div class="ruler">
+        <div class="ruler-fill" id="ruler-fill" style="width:0%"></div>
+        <div class="ruler-cursor" id="ruler-cursor" style="left:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="view" id="view-quiz">
+    <div class="view-header">
+      <div class="eyebrow caps">Chapitre 01</div>
+      <h2>Quiz.</h2>
+      <div class="sub">Trente questions classées par thème. Une bonne réponse, dix points.</div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="resetQuiz()">Recommencer</button>
+      </div>
+    </div>
+    <div class="cats" id="quiz-cats"></div>
+    <div id="quiz-content"></div>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div class="view" id="view-flashcards">
+    <div class="view-header">
+      <div class="eyebrow caps">Chapitre 02</div>
+      <h2>Flashcards.</h2>
+      <div class="sub">Trente termes de vocabulaire. Clique pour retourner, note ta familiarité.</div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="resetFlashcards()">Mélanger</button>
+      </div>
+    </div>
+    <div id="flashcard-content"></div>
+  </div>
+
+  <!-- FRAMEWORKS -->
+  <div class="view" id="view-frameworks">
+    <div class="view-header">
+      <div class="eyebrow caps">Chapitre 03</div>
+      <h2>Frameworks.</h2>
+      <div class="sub">Sept méthodes. Clique sur une carte pour retrouver chaque lettre de mémoire.</div>
+    </div>
+    <div id="frameworks-list"></div>
+    <div id="framework-drill" style="display:none;"></div>
+  </div>
+
+  <!-- OBJECTIONS -->
+  <div class="view" id="view-objections">
+    <div class="view-header">
+      <div class="eyebrow caps">Chapitre 04</div>
+      <h2>Objections.</h2>
+      <div class="sub">Six scénarios. Le prospect te résiste — choisis la meilleure réponse.</div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="resetObjections()">Recommencer</button>
+      </div>
+    </div>
+    <div id="objection-content"></div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <div class="view" id="view-scripts">
+    <div class="view-header">
+      <div class="eyebrow caps">Chapitre 05</div>
+      <h2>Scripts.</h2>
+      <div class="sub">Remets les étapes dans l'ordre canonique.</div>
+    </div>
+    <div id="scripts-content"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============== STORAGE ============== */
+const storage = {
+  async get(key) {
+    try {
+      if (window.storage && typeof window.storage.get === 'function') {
+        const res = await window.storage.get(key);
+        return res ? JSON.parse(res.value) : null;
+      }
+    } catch(e) {}
+    return null;
+  },
+  async set(key, val) {
+    try {
+      if (window.storage && typeof window.storage.set === 'function') {
+        await window.storage.set(key, JSON.stringify(val));
+      }
+    } catch(e) {}
+  }
+};
+
+let state = {
+  xp: 0, streak: 0, lastDay: null,
+  quiz: { answered: {}, category: 'all', index: 0 },
+  flash: { mastered: {}, index: 0, orderSeed: null },
+  fw: { scores: {} },
+  obj: { answered: {}, index: 0 },
+  scripts: { done: {} }
+};
+
+async function loadState() {
+  const saved = await storage.get('stax_v3');
+  if (saved) state = { ...state, ...saved };
+  renderStats();
+  updateStreak();
+}
+async function saveState() {
+  await storage.set('stax_v3', state);
+  renderStats();
+}
+function updateStreak() {
+  const today = new Date().toISOString().slice(0,10);
+  if (state.lastDay === today) return;
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+  if (state.lastDay === yesterday) state.streak++;
+  else if (state.lastDay !== today) state.streak = 1;
+  state.lastDay = today;
+  saveState();
+}
+function addXP(n) {
+  state.xp += n;
+  saveState();
+  showToast(`+${n} points`);
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ============== DATA ============== */
+const QUIZ = [
+  { cat: 'Rôle BDR/SDR', q: 'Que fait principalement un BDR ?', opts: ['Closer les deals après la démo','Générer des opportunités qualifiées pour les AE',"Gérer les clients après l'achat (upsell, rétention)",'Optimiser les process et la data sales'], correct: 1, explain: "Le BDR ouvre, il ne close pas. Sa valeur réside dans la qualité et le volume des leads qu'il transmet aux AE." },
+  { cat: 'Rôle BDR/SDR', q: 'Différence principale BDR vs SDR ?', opts: ['Le BDR fait du closing, le SDR de la prospection','Aucune, les rôles sont identiques',"Le BDR fait de l'outbound, le SDR traite l'inbound",'Le BDR est junior, le SDR est senior'], correct: 2, explain: "BDR = outbound pur (chasse à froid). SDR = leads inbound (formulaires, trials, demandes de démo)." },
+  { cat: 'Rôle BDR/SDR', q: 'Quel reply rate vise un bon BDR en outbound ?', opts: ['1-2%','5-10%','25-35%','50% et plus'], correct: 1, explain: "En outbound, 5-10% de reply rate est l'objectif, avec 1 RDV qualifié pour 20-30 appels." },
+  { cat: 'Rôle BDR/SDR', q: 'Que fait le RevOps ?', opts: ['Il close les grands comptes','Il optimise les process, outils et data pour toute la chaîne sales','Il gère les clients post-vente','Il recrute les BDR'], correct: 1, explain: "RevOps = Revenue Operations. Rôle transversal qui huile toute la machine sales." },
+  { cat: 'Frameworks', q: 'Que signifie BANT ?', opts: ['Business, Action, Next step, Trust','Budget, Authority, Need, Timing','Buyer, Agent, Network, Team','Brand, Approach, Negotiation, Target'], correct: 1, explain: "BANT = Budget, Authority, Need, Timing. Pour les cycles courts." },
+  { cat: 'Frameworks', q: 'Dans SPICED, que signifie le « C » ?', opts: ['Cost','Champion','Critical Event','Close'], correct: 2, explain: "Critical Event = l'événement ou deadline qui crée l'urgence." },
+  { cat: 'Frameworks', q: "Dans MEDDIC, qui est l'Economic Buyer ?", opts: ['Le premier interlocuteur rencontré','Celui qui tient le budget et signe en dernier','Le prescripteur interne','Le Head of Sales'], correct: 1, explain: "L'Economic Buyer possède le budget et signe en dernier. À identifier tôt." },
+  { cat: 'Frameworks', q: 'Les 3 piliers du Challenger Sale ?', opts: ['Talk, Tell, Trust','Target, Try, Triumph','Teach, Tailor, Take control','Test, Try, Tune'], correct: 2, explain: "Teach (insight), Tailor (adapter), Take control (guider)." },
+  { cat: 'Frameworks', q: 'SPIN Selling sert à…', opts: ['Structurer le closing final','Creuser la douleur via un enchaînement de questions','Former les nouveaux BDR','Automatiser les séquences email'], correct: 1, explain: "SPIN = Situation, Problem, Implication, Need-payoff." },
+  { cat: 'Prospection', q: 'Combien de touchpoints dans une séquence BDR classique ?', opts: ['1-2','3-4','5-8','15 et plus'], correct: 2, explain: "5 à 8 touchpoints sur 2-3 semaines, multicanal." },
+  { cat: 'Prospection', q: 'Meilleur créneau pour des cold calls ?', opts: ['Fin de journée (17h-20h)','Matin (9h-12h)','Le weekend','Le lundi uniquement'], correct: 1, explain: "Matin (9h-12h) = meilleur taux de décrochage." },
+  { cat: 'Prospection', q: "Quel signal d'achat est le PLUS fort ?", opts: ['Logo refait','Nouveau Head of Sales recruté il y a moins de 6 mois','Nouveau site web','Page Facebook active'], correct: 1, explain: "Nouveau leader commercial = veut montrer des résultats vite." },
+  { cat: 'Prospection', q: 'Que signifie « stack spying » ?', opts: ['Espionner le pipeline des concurrents',"Détecter les outils qu'utilise une entreprise",'Analyser les deals perdus','Surveiller un prospect sur les réseaux'], correct: 1, explain: "Via BuiltWith, Wappalyzer : savoir quel CRM, MA, analytics une boîte utilise." },
+  { cat: 'Cold email', q: "Longueur max recommandée d'un cold email ?", opts: ['50 mots','100 mots','250 mots','500 mots'], correct: 1, explain: "Moins de 100 mots. La concision est une marque de respect." },
+  { cat: 'Cold email', q: 'Combien de CTA dans un cold email ?', opts: ['Un seul','2 à 3 pour offrir du choix','Au moins 3','Aucun'], correct: 0, explain: "Un seul CTA, simple et daté. Les options diluent la décision." },
+  { cat: 'Cold email', q: 'Quels jours privilégier pour un cold email ?', opts: ['Lundi matin','Mardi-jeudi','Vendredi après-midi','Dimanche soir'], correct: 1, explain: "Mardi-jeudi, 8h-10h ou 16h-18h." },
+  { cat: 'Cold email', q: "Que fait l'email de rupture (breakup) ?", opts: ['Annule un RDV',"Dit au prospect qu'on arrête les relances — génère de bons taux de réponse",'Confirme la vente','Demande un feedback NPS'], correct: 1, explain: "Il joue sur l'aversion à la perte. « C'est mon dernier message » pousse à répondre." },
+  { cat: 'Discovery call', q: 'Temps de préparation avant un discovery call ?', opts: ['Aucune','5 minutes','15 minutes (LinkedIn + actualités + stack + 3 hypothèses)','1 à 2 heures'], correct: 2, explain: "15 minutes bien utilisées : profil, actu, stack, 3 hypothèses de pain." },
+  { cat: 'Discovery call', q: 'Le « niveau 3 » de la douleur, c\'est…', opts: ['La douleur de surface','La cause structurelle',"L'impact business chiffré (deals ratés, coût)",'La solution envisagée'], correct: 2, explain: "Niveau 3 = impact business. Ne jamais pitcher avant." },
+  { cat: 'Discovery call', q: 'Une « next step » acceptable, c\'est…', opts: ['« Je vous rappelle bientôt »','« On verra ça plus tard »','Une date et un créneau précis','Envoyer une plaquette'], correct: 2, explain: "Pas de date = pas de deal." },
+  { cat: 'Objections', q: "Face à « On n'a pas le budget », la bonne posture ?", opts: ['Proposer une remise','Raccrocher poliment',"Déplacer vers le coût de l'inaction",'Insister sur les features'], correct: 2, explain: "Le budget se libère quand le problème coûte plus cher que la solution." },
+  { cat: 'Objections', q: 'Face à « Envoyez une plaquette », tu…', opts: ["L'envoies immédiatement",'Proposes un échange pour personnaliser','Raccroches','Envoies plaquette + 10 emails'], correct: 1, explain: "« Envoyez une plaquette » = éconduite polie. Recadrer vers un échange." },
+  { cat: 'Objections', q: "Face à « C'est trop cher », la première question ?", opts: ['« Par rapport à quoi ? »','« Je peux faire un geste »','« Vous avez tort »','« OK, pas grave »'], correct: 0, explain: "« Par rapport à quoi ? » oblige à nommer un référentiel, puis on ramène au ROI." },
+  { cat: 'Psychologie', q: "Combien de leviers d'influence chez Cialdini ?", opts: ['4','6','8','12'], correct: 1, explain: "Réciprocité, Preuve sociale, Autorité, Rareté, Engagement, Sympathie." },
+  { cat: 'Psychologie', q: "Lequel n'est PAS un levier de Cialdini ?", opts: ['Réciprocité','Autorité','Intimidation','Preuve sociale'], correct: 2, explain: "L'intimidation n'en fait pas partie. Cialdini = persuasion, pas pression." },
+  { cat: 'Psychologie', q: 'Le biais de statu quo, c\'est…', opts: ['La tendance à choisir le moins cher','La tendance à ne rien changer (principal obstacle en vente)',"Le besoin d'acheter en groupe",'La peur de manquer'], correct: 1, explain: "Contrer en rendant le statu quo douloureux + le changement simple." },
+  { cat: 'Pipeline & CRM', q: 'Que signifie SQL en sales ?', opts: ['Structured Query Language','Sales Qualified Lead','Sold Quality Lead','Sales Quota Level'], correct: 1, explain: "SQL = lead qualifié par les Sales (pain + budget + décisionnaire)." },
+  { cat: 'Pipeline & CRM', q: 'Quel show rate vise-t-on ?', opts: ['30%','50%','Plus de 80%','100%'], correct: 2, explain: "Objectif > 80%." },
+  { cat: 'Pipeline & CRM', q: 'ARR signifie…', opts: ['Automated Revenue Report','Annual Run Rate','Annual Recurring Revenue','Average Retention Rate'], correct: 2, explain: "Revenu annuel récurrent. Le KPI roi en SaaS." },
+  { cat: 'Carrière', q: 'Clé n°1 pour être promu BDR → AE ?', opts: ['Attendre','Dépasser son quota 3+ mois consécutifs',"Changer d'entreprise",'Faire du bruit'], correct: 1, explain: "Quota dépassé + maîtrise produit + shadow AE + plan explicite." },
+  { cat: 'Carrière', q: "Candidature via referral vs froide, le taux d'entretien est…", opts: ['Identique','~2x supérieur','~5x supérieur','Inférieur'], correct: 2, explain: "~5x supérieur. Identifier quelqu'un en interne sur LinkedIn change tout." }
+];
+
+const FLASHCARDS = [
+  { term: 'ICP', def: 'Ideal Customer Profile — profil du client idéal, défini sur 5 dimensions (secteur, taille, géo, persona, signaux).' },
+  { term: 'Persona', def: 'Représentation précise du décisionnaire ciblé : titre, responsabilités, douleurs quotidiennes.' },
+  { term: 'Champion', def: 'Interlocuteur interne qui défend votre solution dans sa boîte. À identifier tôt.' },
+  { term: 'Economic Buyer', def: 'Celui qui tient le budget et signe en dernier. Pas toujours le premier interlocuteur.' },
+  { term: 'Outbound', def: 'Prospection sortante — on va chercher le client (cold call, cold email, LinkedIn).' },
+  { term: 'Inbound', def: 'Lead entrant — le client vient à soi (formulaire, trial, demande de démo).' },
+  { term: 'Sequence', def: 'Série de touchpoints planifiés sur un prospect — typiquement 5 à 8 sur 2-3 semaines.' },
+  { term: 'Touchpoint', def: 'Chaque point de contact avec un prospect dans une séquence.' },
+  { term: 'Breakup email', def: "Dernier email d'une séquence signalant qu'on arrête de relancer. Bons taux de réponse." },
+  { term: 'Stack spying', def: "Détecter les outils qu'utilise une entreprise (via BuiltWith, Wappalyzer)." },
+  { term: 'Discovery call', def: "Premier appel approfondi pour comprendre le contexte, la douleur et la décision." },
+  { term: 'Pain point', def: "Problème que le produit peut résoudre. Creuser jusqu'au niveau 3 (impact business)." },
+  { term: 'MQL', def: 'Marketing Qualified Lead — qualifié par le marketing (téléchargement, pages clés visitées).' },
+  { term: 'SQL', def: 'Sales Qualified Lead — qualifié par les Sales : pain, budget et décisionnaire confirmés.' },
+  { term: 'HVQL', def: 'High Value Qualified Lead — demande de forte valeur (ex : demande de démo explicite).' },
+  { term: 'Handoff', def: "Passation d'un lead du BDR vers l'AE avec contexte complet." },
+  { term: 'Pipeline', def: "L'ensemble des opportunités commerciales en cours, à chaque étape." },
+  { term: 'Funnel', def: 'Entonnoir de conversion : taux de passage entre chaque étape.' },
+  { term: 'KPI', def: 'Key Performance Indicator — indicateur de performance clé.' },
+  { term: 'Reply rate', def: "% de réponses aux emails envoyés. Objectif BDR : 5-10%." },
+  { term: 'Connect rate', def: "% d'appels aboutissant à une vraie conversation. Objectif : 15-25%." },
+  { term: 'Show rate', def: '% de RDV qui ont effectivement lieu. Objectif : plus de 80%.' },
+  { term: 'ARR', def: 'Annual Recurring Revenue — revenu annuel récurrent. KPI roi en SaaS.' },
+  { term: 'MRR', def: 'Monthly Recurring Revenue — revenu mensuel récurrent.' },
+  { term: 'Churn', def: 'Taux de désabonnement / perte de clients sur une période donnée.' },
+  { term: 'LTV', def: "Lifetime Value — valeur d'un client sur toute la durée de la relation." },
+  { term: 'Deal velocity', def: 'Vitesse à laquelle les deals avancent dans le pipeline.' },
+  { term: 'CRM', def: 'Customer Relationship Management — HubSpot, Salesforce, Pipedrive.' },
+  { term: 'Sequencer', def: "Outil d'automatisation des séquences : Lemlist, Outreach, Salesloft." },
+  { term: 'AE', def: "Account Executive — close les deals après la qualification BDR." }
+];
+
+const FW_COLORS = ['yellow', 'pink', 'blue', 'olive', 'taupe', 'lavender', 'terracotta'];
+
+const FRAMEWORKS = [
+  { id: 'bant', name: 'BANT', tagline: 'Qualification rapide — cycles courts', letters: [
+    { letter: 'B', word: 'Budget', hint: 'Le prospect a-t-il une enveloppe pour résoudre ce problème ?' },
+    { letter: 'A', word: 'Authority', hint: "Est-il décisionnaire ?" },
+    { letter: 'N', word: 'Need', hint: 'A-t-il un besoin réel et urgent ?' },
+    { letter: 'T', word: 'Timing', hint: "Y a-t-il une échéance qui pousse à agir ?" }
+  ]},
+  { id: 'meddic', name: 'MEDDIC', tagline: 'Qualification avancée — deals complexes', letters: [
+    { letter: 'M', word: 'Metrics', hint: "Quels gains chiffrés justifient l'achat ?" },
+    { letter: 'E', word: 'Economic Buyer', hint: 'Qui possède le budget et signe en dernier ?' },
+    { letter: 'D', word: 'Decision Criteria', hint: 'Sur quels critères décident-ils ?' },
+    { letter: 'D', word: 'Decision Process', hint: 'Quel est le processus interne de validation ?' },
+    { letter: 'I', word: 'Identify Pain', hint: 'Quelle est la douleur profonde et coûteuse ?' },
+    { letter: 'C', word: 'Champion', hint: 'Qui défend votre solution en interne ?' }
+  ]},
+  { id: 'spiced', name: 'SPICED', tagline: 'La méthode HubSpot — fil conducteur de discovery', letters: [
+    { letter: 'S', word: 'Situation', hint: "Contexte actuel : outils, organisation, taille d'équipe." },
+    { letter: 'P', word: 'Pain', hint: 'La douleur réelle, profonde, coûteuse à ignorer.' },
+    { letter: 'I', word: 'Impact', hint: "L'impact chiffré de cette douleur." },
+    { letter: 'C', word: 'Critical Event', hint: "L'événement qui crée l'urgence d'agir." },
+    { letter: 'D', word: 'Decision', hint: 'Qui décide, selon quels critères, dans quel délai ?' }
+  ]},
+  { id: 'spin', name: 'SPIN', tagline: 'Creuser le besoin par questionnement', letters: [
+    { letter: 'S', word: 'Situation', hint: '« Comment gérez-vous actuellement X ? »' },
+    { letter: 'P', word: 'Problem', hint: '« Quelles difficultés rencontrez-vous ? »' },
+    { letter: 'I', word: 'Implication', hint: "« Quel impact cela a-t-il sur votre équipe ? »" },
+    { letter: 'N', word: 'Need-payoff', hint: "« Qu'est-ce que ça changerait pour vous ? »" }
+  ]},
+  { id: 'challenger', name: '3T Challenger', tagline: 'La méthode qui fait la différence', letters: [
+    { letter: 'T', word: 'Teach', hint: 'Apporter une insight unique sur leur marché.' },
+    { letter: 'T', word: 'Tailor', hint: 'Adapter le message au décisionnaire.' },
+    { letter: 'T', word: 'Take control', hint: "Guider la conversation, assumer le rythme." }
+  ]},
+  { id: 'aida', name: 'AIDA', tagline: 'Structure du cold email', letters: [
+    { letter: 'A', word: 'Attention', hint: 'Objet accrocheur ou intro personnalisée.' },
+    { letter: 'I', word: 'Intérêt', hint: "Ce qu'on observe chez des boîtes comme la leur." },
+    { letter: 'D', word: 'Désir', hint: "Ce qu'on a aidé d'autres à faire (chiffré)." },
+    { letter: 'A', word: 'Action', hint: 'Un CTA unique : « 15 min cette semaine ? »' }
+  ]},
+  { id: 'cialdini', name: 'Cialdini 6', tagline: "Les 6 leviers d'influence", letters: [
+    { letter: '1', word: 'Réciprocité', hint: 'Donner avant de demander.' },
+    { letter: '2', word: 'Preuve sociale', hint: '« Des boîtes comme X ont fait Y avec nous. »' },
+    { letter: '3', word: 'Autorité', hint: 'Maîtriser son sujet, citer des chiffres.' },
+    { letter: '4', word: 'Rareté', hint: '« On a 2 onboardings ce trimestre. »' },
+    { letter: '5', word: 'Engagement', hint: 'Micro-engagements qui mènent au oui final.' },
+    { letter: '6', word: 'Sympathie', hint: "On achète à des gens qu'on aime." }
+  ]}
+];
+
+const OBJECTIONS = [
+  { prospect: "Franchement, on n'a pas le budget pour ça cette année.", options: [
+    { text: "Je comprends. On peut revoir ça dans 6 mois si vous préférez.", correct: false, why: "Tu abandonnes trop vite. Le budget est rarement le vrai problème — c'est souvent le coût de la douleur qui n'a pas été chiffré." },
+    { text: "OK, je peux vous faire un tarif spécial, dites-moi ce qu'il vous faut.", correct: false, why: "Discount = signal faible. Tu valides implicitement que ton prix est arbitraire." },
+    { text: "Je respecte ça. Ce que j'entends souvent, c'est que le budget se libère quand le problème coûte plus cher que la solution. Vous avez une idée de ce que ça vous coûte aujourd'hui ?", correct: true, why: "Tu déplaces la conversation du prix vers le coût de l'inaction. Si la douleur est réelle et chiffrée, le budget se trouve." },
+    { text: "Et si je vous rappelle au prochain trimestre ?", correct: false, why: "Tu sors du deal sans next step concrète. Classique mort douce du pipeline." }
+  ]},
+  { prospect: "Désolé, on n'a pas vraiment le temps de discuter de ça maintenant.", options: [
+    { text: "Pas de problème, bonne continuation.", correct: false, why: "Trop passif. Tu perds un lead qui avait peut-être besoin de 2 minutes de reframing." },
+    { text: "Je comprends — tout le monde est débordé. C'est justement pour ça que je veux être bref. Est-ce que [problème] est quand même un sujet qui vous pèse ? Si oui, 15 minutes maintenant peuvent vous éviter 3 mois de friction.", correct: true, why: "Tu reconnais l'objection, la retournes, et recentres sur le problème." },
+    { text: "Donnez-moi juste 5 minutes maintenant !", correct: false, why: "Insister frontalement sans recadrage = on te raccroche au nez." },
+    { text: "Je peux vous appeler ce soir à 20h ?", correct: false, why: "Tu ne traites pas l'objection sur le fond — tu déplaces juste le refus." }
+  ]},
+  { prospect: "Écoutez, envoyez-moi juste une plaquette par email, je regarderai.", options: [
+    { text: "Bien sûr, je vous envoie tout de suite.", correct: false, why: "C'est exactement l'éconduite polie. Ton email finit dans la corbeille en 30 secondes." },
+    { text: "Je peux le faire. Mais je préfère d'abord comprendre votre situation pour ne vous envoyer que ce qui est pertinent. Ça prend 10 minutes — créneau jeudi matin ?", correct: true, why: "Tu acceptes en apparence, mais tu recadres vers un échange court. Et tu qualifies la sincérité de l'intérêt." },
+    { text: "Non, notre produit se comprend seulement en démo.", correct: false, why: "Refus frontal = tu perds toute posture de consultant." },
+    { text: "OK, quelle adresse email ?", correct: false, why: "Tu envoies sans condition — opportunité perdue." }
+  ]},
+  { prospect: "On travaille déjà avec [Concurrent], et pour l'instant on est satisfaits.", options: [
+    { text: "Ah, mais notre solution est bien meilleure, laissez-moi vous expliquer.", correct: false, why: "Attaquer frontalement la concurrence braque, et tu ne sais encore rien de leur usage." },
+    { text: "OK, je ne vous dérange plus.", correct: false, why: "« Satisfaits aujourd'hui » n'est pas « satisfaits pour toujours ». C'est une ouverture à creuser." },
+    { text: "C'est intéressant — qu'est-ce qui vous a fait choisir [Concurrent] à l'époque ? Et aujourd'hui, y a-t-il des choses que vous aimeriez pouvoir faire et que [Concurrent] ne permet pas ?", correct: true, why: "Tu cherches les angles morts, pas les différences frontales. C'est là que se cachent les opportunités." },
+    { text: "Combien vous les payez ?", correct: false, why: "Intrusive et sans valeur à ce stade." }
+  ]},
+  { prospect: "Je dois en parler à mon associé avant de décider quoi que ce soit.", options: [
+    { text: "Bien sûr, prenez le temps et revenez vers moi.", correct: false, why: "Tu laisses ton interlocuteur pitcher seul en interne. Tu perds le contrôle du message." },
+    { text: "Bien sûr. Pour que vous puissiez leur présenter ça dans les meilleures conditions, pourquoi ne pas les inclure dans notre prochain échange ? La semaine prochaine vous irait ?", correct: true, why: "Tu obtiens un RDV multi-stakeholders. C'est aussi un test de sincérité." },
+    { text: "Vous pouvez l'appeler maintenant ?", correct: false, why: "Trop brutal, mauvais tempo." },
+    { text: "Pas de souci, je vous envoie une plaquette à transférer.", correct: false, why: "Retour à la case plaquette — pire encore." }
+  ]},
+  { prospect: "Franchement, c'est trop cher pour ce que c'est.", options: [
+    { text: "Combien vous attendiez-vous à payer ?", correct: false, why: "Tu te fais ancrer au prix qu'il balance." },
+    { text: "Par rapport à quoi ? — puis : Si on résout [problème X] et que ça génère [impact Y], est-ce que l'investissement vous paraît encore disproportionné ?", correct: true, why: "« Par rapport à quoi ? » oblige à nommer un référentiel. Puis tu ramènes à la valeur (ROI)." },
+    { text: "OK, je peux descendre de 15%.", correct: false, why: "Céder sur le prix avant d'avoir entendu la vraie objection = tu signales que ton prix est négociable." },
+    { text: "C'est le tarif standard, je ne peux pas changer.", correct: false, why: "Réponse défensive qui ferme la discussion." }
+  ]}
+];
+
+const SCRIPTS = [
+  { id: 'coldcall', title: 'Cold call en quatre temps', desc: 'Remets les 4 étapes dans le bon ordre.', steps: [
+    { label: 'Accroche courte et directe', detail: "Prénom, entreprise, raison de l'appel en 10 secondes" },
+    { label: 'Demander la permission', detail: "« J'ai 30 secondes ? »" },
+    { label: 'Pitch de la pain', detail: "« On travaille avec des boîtes comme la vôtre qui ont ce problème X… »" },
+    { label: 'Question ouverte', detail: 'Laisser parler. Écouter.' }
+  ]},
+  { id: 'discovery', title: 'Discovery call en six étapes', desc: 'Remets les 6 étapes dans le bon ordre.', steps: [
+    { label: 'Poser le cadre', detail: "« Pour qu'on soit efficaces, je voudrais d'abord comprendre votre situation… »" },
+    { label: 'Comprendre le contexte', detail: "Parlez-moi de votre entreprise, taille d'équipe, outils actuels" },
+    { label: 'Creuser les problèmes', detail: "Cœur du call. Utiliser SPIN. Niveau 3 de la douleur." },
+    { label: 'Objectifs et timeline', detail: 'Où voulez-vous être dans 12 mois ? Pourquoi maintenant ?' },
+    { label: 'Budget et décision', detail: 'Enveloppe, décisionnaires, process de validation' },
+    { label: 'Résumé et next step', detail: 'Récap de la douleur, next step avec date précise' }
+  ]},
+  { id: 'sequence', title: 'Séquence multicanale J1 → J15', desc: 'Remets les 6 touchpoints dans le bon ordre.', steps: [
+    { label: 'J1 — Email de premier contact', detail: 'Personnalisé, court, axé sur la pain' },
+    { label: 'J3 — Vue du profil LinkedIn', detail: 'Signal passif (ils voient qui vous êtes)' },
+    { label: 'J5 — Message LinkedIn court', detail: '3 lignes max, pas de pitch' },
+    { label: 'J8 — Relance email', detail: "Ajout d'une insight ou d'un cas client" },
+    { label: 'J12 — Cold call', detail: "L'appel donne 3x le taux de réponse email seul" },
+    { label: 'J15 — Email de rupture', detail: "« C'est mon dernier message… »" }
+  ]}
+];
+
+/* ============== NAV ============== */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => switchView(tab.dataset.view));
+});
+function switchView(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === name));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === `view-${name}`));
+  if (name === 'quiz') renderQuiz();
+  if (name === 'flashcards') renderFlashcards();
+  if (name === 'frameworks') renderFrameworks();
+  if (name === 'objections') renderObjections();
+  if (name === 'scripts') renderScripts();
+  if (name === 'dashboard') renderStats();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============== STATS ============== */
+function renderStats() {
+  document.getElementById('stat-xp').textContent = state.xp;
+  document.getElementById('stat-streak').textContent = state.streak;
+
+  const quizCorrect = Object.values(state.quiz.answered).filter(x => x.correct).length;
+  const flashMastered = Object.values(state.flash.mastered).filter(x => x >= 2).length;
+  const fwMastered = Object.values(state.fw.scores).filter(s => s === 1).length;
+  const objCorrect = Object.values(state.obj.answered).filter(x => x.correct).length;
+  const scriptsDone = Object.values(state.scripts.done).filter(Boolean).length;
+
+  const setStat = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+  setStat('stat-quiz', quizCorrect > 0 ? `${quizCorrect}/${QUIZ.length} réussis` : 'À démarrer');
+  setStat('stat-flash', flashMastered > 0 ? `${flashMastered}/${FLASHCARDS.length} acquises` : 'À démarrer');
+  setStat('stat-fw', fwMastered > 0 ? `${fwMastered}/${FRAMEWORKS.length} maîtrisés` : 'À démarrer');
+  setStat('stat-obj', objCorrect > 0 ? `${objCorrect}/${OBJECTIONS.length} parés` : 'À démarrer');
+  setStat('stat-script', scriptsDone > 0 ? `${scriptsDone}/${SCRIPTS.length} reconstitués` : 'À démarrer');
+
+  const total = QUIZ.length + FLASHCARDS.length + FRAMEWORKS.length + OBJECTIONS.length + SCRIPTS.length;
+  const done = quizCorrect + flashMastered + fwMastered + objCorrect + scriptsDone;
+  const pct = Math.round(done / total * 100);
+  setStat('stat-mastery', pct + '%');
+  setStat('player-done', String(done).padStart(2, '0'));
+  setStat('player-total', total);
+  const rf = document.getElementById('ruler-fill'); if (rf) rf.style.width = pct + '%';
+  const rc = document.getElementById('ruler-cursor'); if (rc) rc.style.left = pct + '%';
+}
+
+/* ============== QUIZ ============== */
+function renderQuiz() {
+  const cats = ['all', ...Array.from(new Set(QUIZ.map(q => q.cat)))];
+  document.getElementById('quiz-cats').innerHTML = cats.map(c =>
+    `<button class="cat-pill ${state.quiz.category === c ? 'active' : ''}" onclick="setQuizCat('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Toutes' : c}</button>`
+  ).join('');
+  renderQuizQuestion();
+}
+function setQuizCat(c) { state.quiz.category = c; state.quiz.index = 0; saveState(); renderQuiz(); }
+function getFilteredQuiz() {
+  return QUIZ.map((q, i) => ({ ...q, origIdx: i })).filter(q => state.quiz.category === 'all' || q.cat === state.quiz.category);
+}
+function renderQuizQuestion() {
+  const content = document.getElementById('quiz-content');
+  const filtered = getFilteredQuiz();
+  if (filtered.length === 0) { content.innerHTML = '<div class="empty-state"><div class="big">Rien par ici</div></div>'; return; }
+  if (state.quiz.index >= filtered.length) { renderQuizResults(filtered); return; }
+  const q = filtered[state.quiz.index];
+  const answered = state.quiz.answered[q.origIdx];
+  const letters = ['A', 'B', 'C', 'D'];
+
+  content.innerHTML = `
+    <div class="quiz-wrap">
+      <div class="quiz-progress">
+        <span class="cat-tag">${q.cat}</span>
+        <span class="counter">${state.quiz.index + 1} / ${filtered.length}</span>
+      </div>
+      <div class="quiz-question">${q.q}</div>
+      <div class="quiz-options">
+        ${q.opts.map((opt, i) => {
+          let cls = '';
+          if (answered !== undefined) {
+            if (i === q.correct) cls = 'correct';
+            else if (i === answered.pick) cls = 'wrong';
+          }
+          return `<button class="quiz-option ${cls}" ${answered !== undefined ? 'disabled' : ''} onclick="answerQuiz(${q.origIdx}, ${i}, ${q.correct})">
+            <span class="letter">${letters[i]}</span><span>${opt}</span>
+          </button>`;
+        }).join('')}
+      </div>
+      ${answered !== undefined ? `
+        <div class="feedback ${answered.correct ? 'ok' : 'ko'}">
+          <strong>${answered.correct ? 'Juste.' : 'Pas tout à fait.'}</strong> ${q.explain}
+        </div>` : ''}
+      <div class="quiz-nav">
+        <button class="btn btn-ghost" ${state.quiz.index === 0 ? 'disabled style="opacity:0.3;cursor:not-allowed"' : ''} onclick="prevQuiz()">Précédent</button>
+        ${answered !== undefined
+          ? `<button class="btn" onclick="nextQuiz()">${state.quiz.index === filtered.length - 1 ? 'Voir le score' : 'Suivant'}</button>`
+          : `<span class="sr">Choisis une réponse</span>`}
+      </div>
+    </div>`;
+}
+function answerQuiz(idx, pick, correct) {
+  const isCorrect = pick === correct;
+  state.quiz.answered[idx] = { pick, correct: isCorrect };
+  if (isCorrect) addXP(10);
+  saveState(); renderQuizQuestion();
+}
+function nextQuiz() { state.quiz.index++; saveState(); renderQuizQuestion(); }
+function prevQuiz() { if (state.quiz.index > 0) state.quiz.index--; saveState(); renderQuizQuestion(); }
+function renderQuizResults(filtered) {
+  const correct = filtered.filter(q => state.quiz.answered[q.origIdx]?.correct).length;
+  const total = filtered.length;
+  const pct = Math.round(correct / total * 100);
+  let label = 'À retravailler';
+  if (pct >= 90) label = 'Maîtrise solide';
+  else if (pct >= 70) label = 'Bien engagé';
+  else if (pct >= 50) label = 'On approche';
+
+  document.getElementById('quiz-content').innerHTML = `
+    <div class="results-card">
+      <div class="results-score">${correct}<span class="denom">/${total}</span></div>
+      <div class="results-label">${label}</div>
+      <div class="results-sub">${state.quiz.category === 'all' ? 'Toutes catégories' : state.quiz.category}</div>
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn" onclick="resetQuiz()">Recommencer</button>
+        <button class="btn btn-ghost" onclick="switchView('dashboard')">Accueil</button>
+      </div>
+    </div>`;
+}
+function resetQuiz() {
+  if (state.quiz.category === 'all') state.quiz.answered = {};
+  else QUIZ.forEach((q, i) => { if (q.cat === state.quiz.category) delete state.quiz.answered[i]; });
+  state.quiz.index = 0;
+  saveState(); renderQuiz();
+}
+
+/* ============== FLASHCARDS ============== */
+const FLASH_COLORS = ['pink', 'yellow', 'blue', 'olive', 'taupe', 'lavender', 'terracotta'];
+function getShuffledFlash() {
+  if (!state.flash.orderSeed) { state.flash.orderSeed = Date.now(); saveState(); }
+  const order = FLASHCARDS.map((_, i) => i);
+  let seed = state.flash.orderSeed;
+  for (let i = order.length - 1; i > 0; i--) {
+    seed = (seed * 9301 + 49297) % 233280;
+    const j = Math.floor(seed / 233280 * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+}
+function renderFlashcards() {
+  const order = getShuffledFlash();
+  const content = document.getElementById('flashcard-content');
+  if (state.flash.index >= order.length) {
+    const m = Object.values(state.flash.mastered).filter(x => x >= 2).length;
+    content.innerHTML = `
+      <div class="results-card">
+        <div class="results-score">${m}<span class="denom">/${FLASHCARDS.length}</span></div>
+        <div class="results-label">Cartes acquises</div>
+        <div class="results-sub">Paquet complet. Relance pour consolider.</div>
+        <button class="btn" onclick="resetFlashcards()">Nouveau tour</button>
+      </div>`;
+    return;
+  }
+  const idx = order[state.flash.index];
+  const card = FLASHCARDS[idx];
+  const color = FLASH_COLORS[state.flash.index % FLASH_COLORS.length];
+  content.innerHTML = `
+    <div class="flash-wrap">
+      <div class="flash-counter">Carte <span class="big">${String(state.flash.index + 1).padStart(2, '0')}</span> sur ${order.length}</div>
+      <div class="fc-scene">
+        <div class="fc" id="fc" onclick="flipCard()">
+          <div class="fc-face fc-front" style="background: var(--${color});">
+            <div class="fc-top">
+              <div class="fc-tag">Terme</div>
+              <div class="fc-num">${String(state.flash.index + 1).padStart(2, '0')}</div>
+            </div>
+            <div class="fc-term">${card.term}</div>
+            <div class="fc-bottom"><div class="fc-hint">Cliquer pour retourner</div><div></div></div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-top">
+              <div class="fc-tag">Définition</div>
+              <div class="fc-num">${String(state.flash.index + 1).padStart(2, '0')}</div>
+            </div>
+            <div class="fc-def">${card.def}</div>
+            <div class="fc-bottom"><div class="fc-hint">Cliquer pour retourner</div><div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="rating">
+        <button class="rating-btn hard" onclick="rateCard(${idx}, 0)">Difficile</button>
+        <button class="rating-btn" onclick="rateCard(${idx}, 1)">Moyen</button>
+        <button class="rating-btn easy" onclick="rateCard(${idx}, 2)">Facile</button>
+      </div>
+    </div>`;
+}
+function flipCard() { document.getElementById('fc').classList.toggle('flipped'); }
+function rateCard(idx, r) {
+  state.flash.mastered[idx] = r;
+  if (r >= 2) addXP(5);
+  state.flash.index++;
+  saveState(); renderFlashcards();
+}
+function resetFlashcards() { state.flash.index = 0; state.flash.orderSeed = Date.now(); saveState(); renderFlashcards(); }
+
+/* ============== FRAMEWORKS ============== */
+function renderFrameworks() {
+  const list = document.getElementById('frameworks-list');
+  const drill = document.getElementById('framework-drill');
+  drill.style.display = 'none';
+  list.style.display = 'block';
+  list.innerHTML = `
+    <div class="bands">
+      ${FRAMEWORKS.map((fw, i) => {
+        const score = state.fw.scores[fw.id];
+        const status = score === 1 ? 'Maîtrisé' : score === 0.5 ? 'En cours' : 'À apprendre';
+        const color = FW_COLORS[i % FW_COLORS.length];
+        return `
+          <button class="band band-c-${color}" onclick="startFwDrill('${fw.id}')">
+            <div class="band-num">${String(i + 1).padStart(2, '0')}</div>
+            <div class="band-titles">
+              <div class="band-title">${fw.name}</div>
+              <div class="band-subtitle">${fw.tagline}</div>
+            </div>
+            <div class="band-right">
+              <div class="band-meta">${fw.letters.length} lettres</div>
+              <div class="band-status">${status}</div>
+            </div>
+            <div class="band-icon"><svg><use href="#i-compass"/></svg></div>
+          </button>`;
+      }).join('')}
+    </div>`;
+}
+function startFwDrill(id) {
+  const fw = FRAMEWORKS.find(f => f.id === id);
+  if (!fw) return;
+  document.getElementById('frameworks-list').style.display = 'none';
+  const drill = document.getElementById('framework-drill');
+  drill.style.display = 'block';
+  drill.innerHTML = `
+    <div class="fw-drill">
+      <div class="fw-drill-header">
+        <div>
+          <div class="fw-drill-title">${fw.name}</div>
+          <div class="fw-drill-sub">${fw.tagline}</div>
+        </div>
+        <button class="btn btn-ghost" onclick="renderFrameworks()">← Retour</button>
+      </div>
+      <p class="sr" style="margin-bottom:24px;">Retrouve chaque mot. Tu peux aussi tout révéler d'un coup.</p>
+      ${fw.letters.map((l, i) => `
+        <div class="fw-row">
+          <div class="fw-badge">${l.letter}</div>
+          <div class="fw-content">
+            <div class="fw-hint-label caps">Indice</div>
+            <div class="fw-hint-text">${l.hint}</div>
+            <input type="text" id="fw-input-${i}" placeholder="Tape ta réponse…" oninput="checkFwInput(${i}, '${fw.id}')" />
+            <div class="fw-reveal" id="fw-reveal-${i}"><strong>Réponse :</strong> ${l.word}</div>
+          </div>
+        </div>`).join('')}
+      <div style="display:flex; gap:10px; justify-content: space-between; margin-top:28px; flex-wrap: wrap;">
+        <button class="btn btn-ghost" onclick="revealAllFw('${fw.id}')">Tout révéler</button>
+        <button class="btn" onclick="markFwMastered('${fw.id}')">Je maîtrise</button>
+      </div>
+    </div>`;
+}
+function checkFwInput(i, fwId) {
+  const fw = FRAMEWORKS.find(f => f.id === fwId);
+  const input = document.getElementById(`fw-input-${i}`);
+  const reveal = document.getElementById(`fw-reveal-${i}`);
+  const val = input.value.trim().toLowerCase();
+  const correct = fw.letters[i].word.toLowerCase();
+  input.classList.remove('correct', 'wrong');
+  if (val.length === 0) { reveal.classList.remove('show'); return; }
+  if (correct.startsWith(val) && val.length >= 3) {
+    if (val === correct || val === correct.split(' ')[0]) { input.classList.add('correct'); reveal.classList.add('show'); }
+  } else if (val.length >= correct.length) { input.classList.add('wrong'); }
+}
+function revealAllFw(fwId) {
+  const fw = FRAMEWORKS.find(f => f.id === fwId);
+  fw.letters.forEach((l, i) => {
+    const input = document.getElementById(`fw-input-${i}`);
+    const reveal = document.getElementById(`fw-reveal-${i}`);
+    input.value = l.word; input.classList.remove('wrong'); input.classList.add('correct'); reveal.classList.add('show');
+  });
+  state.fw.scores[fwId] = Math.max(state.fw.scores[fwId] || 0, 0.5);
+  saveState();
+}
+function markFwMastered(fwId) {
+  state.fw.scores[fwId] = 1; addXP(20); saveState();
+  showToast('Framework validé');
+  setTimeout(() => renderFrameworks(), 400);
+}
+
+/* ============== OBJECTIONS ============== */
+function renderObjections() {
+  const content = document.getElementById('objection-content');
+  if (state.obj.index >= OBJECTIONS.length) {
+    const correct = Object.values(state.obj.answered).filter(a => a.correct).length;
+    content.innerHTML = `
+      <div class="results-card">
+        <div class="results-score">${correct}<span class="denom">/${OBJECTIONS.length}</span></div>
+        <div class="results-label">Objections parées</div>
+        <div class="results-sub">Toute l'escrime traversée.</div>
+        <button class="btn" onclick="resetObjections()">Recommencer</button>
+      </div>`;
+    return;
+  }
+  const obj = OBJECTIONS[state.obj.index];
+  const answered = state.obj.answered[state.obj.index];
+  content.innerHTML = `
+    <div class="scenario-wrap">
+      <div class="quiz-progress">
+        <span class="cat-tag" style="background:var(--olive); color:var(--white);">Scénario ${state.obj.index + 1}/${OBJECTIONS.length}</span>
+        <span class="counter">Objections</span>
+      </div>
+      <div class="prospect-box">
+        <div class="speaker caps">Le prospect te dit</div>
+        <div class="quote">« ${obj.prospect} »</div>
+      </div>
+      <div class="scenario-label caps">Meilleure réponse ?</div>
+      <div class="scenario-responses">
+        ${obj.options.map((opt, i) => {
+          let cls = '';
+          if (answered !== undefined) {
+            if (opt.correct) cls = 'correct';
+            else if (i === answered.pick) cls = 'wrong';
+          }
+          return `<button class="scenario-response ${cls}" ${answered !== undefined ? 'disabled' : ''} onclick="answerObjection(${i})">« ${opt.text} »</button>`;
+        }).join('')}
+      </div>
+      ${answered !== undefined ? `
+        <div class="feedback ${answered.correct ? 'ok' : 'ko'}">
+          <strong>${answered.correct ? 'Bien joué.' : 'À revoir.'}</strong> ${obj.options[answered.pick].why}
+        </div>
+        ${!answered.correct ? `<div class="feedback ok"><strong>Réponse attendue.</strong> ${obj.options.find(o => o.correct).why}</div>` : ''}
+      ` : ''}
+      <div class="quiz-nav">
+        <button class="btn btn-ghost" ${state.obj.index === 0 ? 'disabled style="opacity:0.3;cursor:not-allowed"' : ''} onclick="prevObjection()">Précédent</button>
+        ${answered !== undefined
+          ? `<button class="btn" onclick="nextObjection()">${state.obj.index === OBJECTIONS.length - 1 ? 'Voir le score' : 'Suivant'}</button>`
+          : `<span class="sr">Choisis une réponse</span>`}
+      </div>
+    </div>`;
+}
+function answerObjection(pick) {
+  const obj = OBJECTIONS[state.obj.index];
+  const isCorrect = obj.options[pick].correct;
+  state.obj.answered[state.obj.index] = { pick, correct: isCorrect };
+  if (isCorrect) addXP(15);
+  saveState(); renderObjections();
+}
+function nextObjection() { state.obj.index++; saveState(); renderObjections(); }
+function prevObjection() { if (state.obj.index > 0) state.obj.index--; saveState(); renderObjections(); }
+function resetObjections() { state.obj.answered = {}; state.obj.index = 0; saveState(); renderObjections(); }
+
+/* ============== SCRIPTS ============== */
+let scriptState = { activeId: null, order: [], answer: [] };
+function renderScripts() {
+  const content = document.getElementById('scripts-content');
+  if (!scriptState.activeId) {
+    const colors = ['yellow', 'blue', 'pink'];
+    content.innerHTML = `
+      <div class="bands">
+        ${SCRIPTS.map((s, i) => {
+          const done = state.scripts.done[s.id];
+          return `
+            <button class="band band-c-${colors[i]}" onclick="startScript('${s.id}')">
+              <div class="band-num">${String(i + 1).padStart(2, '0')}</div>
+              <div class="band-titles">
+                <div class="band-title">${s.title}</div>
+                <div class="band-subtitle">${s.desc}</div>
+              </div>
+              <div class="band-right">
+                <div class="band-meta">${s.steps.length} étapes</div>
+                <div class="band-status">${done ? 'Réussi' : 'À faire'}</div>
+              </div>
+              <div class="band-icon"><svg><use href="#i-doc"/></svg></div>
+            </button>`;
+        }).join('')}
+      </div>`;
+  } else { renderScriptDrill(); }
+}
+function startScript(id) {
+  const s = SCRIPTS.find(x => x.id === id);
+  if (!s) return;
+  scriptState.activeId = id;
+  const indexes = s.steps.map((_, i) => i);
+  for (let i = indexes.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+  }
+  scriptState.order = indexes;
+  scriptState.answer = [];
+  renderScripts();
+}
+function renderScriptDrill() {
+  const s = SCRIPTS.find(x => x.id === scriptState.activeId);
+  const content = document.getElementById('scripts-content');
+  const pool = scriptState.order.filter(i => !scriptState.answer.includes(i));
+  const done = scriptState.answer.length === s.steps.length;
+  content.innerHTML = `
+    <div class="fw-drill">
+      <div class="fw-drill-header">
+        <div>
+          <div class="fw-drill-title" style="font-size:48px;">${s.title}</div>
+          <div class="fw-drill-sub">${s.desc}</div>
+        </div>
+        <button class="btn btn-ghost" onclick="cancelScript()">← Retour</button>
+      </div>
+      <div style="margin-bottom:24px;">
+        <div class="caps" style="color:var(--muted); margin-bottom:12px;">Ordre retenu</div>
+        ${scriptState.answer.length === 0
+          ? '<div class="sr" style="padding: 22px; text-align:center; background: var(--bg); border-radius: 12px;">Choisis les étapes ci-dessous dans le bon ordre</div>'
+          : scriptState.answer.map((idx, pos) => {
+            const step = s.steps[idx];
+            const isCorrect = done && idx === pos;
+            const bg = done ? (isCorrect ? '#E8F0E0' : '#F8E2E2') : 'var(--bg)';
+            const badgeBg = done ? (isCorrect ? 'var(--green)' : 'var(--red)') : 'var(--ink)';
+            return `
+              <div class="fw-row" style="background:${bg};">
+                <div class="fw-badge" style="background:${badgeBg};">${pos + 1}</div>
+                <div class="fw-content">
+                  <div style="font-weight:900; font-size:22px; letter-spacing:-0.03em; line-height:1.1;">${step.label}</div>
+                  <div class="sr" style="margin-top:4px;">${step.detail}</div>
+                  ${done && !isCorrect ? `<div style="margin-top:6px; font-size:12px; color:var(--green); font-weight:700;">Bonne place : étape ${idx + 1}</div>` : ''}
+                </div>
+              </div>`;
+          }).join('')}
+      </div>
+      ${!done ? `
+        <div class="caps" style="color:var(--muted); margin-bottom:12px;">Étapes restantes</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          ${pool.map(idx => `
+            <button class="quiz-option" onclick="pickScriptStep(${idx})">
+              <span>${s.steps[idx].label}</span>
+            </button>`).join('')}
+        </div>
+      ` : `
+        <div class="feedback ${scriptState.answer.every((v, i) => v === i) ? 'ok' : 'ko'}">
+          <strong>${scriptState.answer.every((v, i) => v === i) ? 'Ordre parfait.' : 'À revoir.'}</strong>
+          ${scriptState.answer.every((v, i) => v === i) ? "Tu as reconstitué l'ordre canonique." : "Vérifie les placements corrects en vert."}
+        </div>
+        <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+          <button class="btn" onclick="startScript('${s.id}')">Refaire</button>
+          <button class="btn btn-ghost" onclick="cancelScript()">Retour</button>
+        </div>
+      `}
+    </div>`;
+}
+function pickScriptStep(idx) {
+  scriptState.answer.push(idx);
+  const s = SCRIPTS.find(x => x.id === scriptState.activeId);
+  if (scriptState.answer.length === s.steps.length) {
+    const all = scriptState.answer.every((v, i) => v === i);
+    if (all) { state.scripts.done[s.id] = true; addXP(25); }
+    saveState();
+  }
+  renderScriptDrill();
+}
+function cancelScript() { scriptState.activeId = null; scriptState.order = []; scriptState.answer = []; renderScripts(); }
+
+/* ============== INIT ============== */
+(async () => { await loadState(); renderStats(); })();
+</script>
+</body>
+</html>
