@@ -1,8 +1,8 @@
 # Sales Tech Academy
 
-Une app de révision pour apprendre le métier de BDR/SDR — rôles, méthodes de qualification, prospection, gestion d'objections, psychologie de la vente.
+L'outil gratuit pour apprendre le métier de Sales dans la Tech — rôles, méthodes de qualification, prospection, gestion d'objections, psychologie de la vente.
 
-**→ [Lancer l'app](https://ton-username.github.io/sales-tech-academy/)**
+**→ [Lancer l'app](https://salesacademy.github.io/SalesTech/)**
 
 ## Cinq modes d'entraînement
 
@@ -13,3 +13,7 @@ Une app de révision pour apprendre le métier de BDR/SDR — rôles, méthodes 
 - **Scripts** — reconstituer l'ordre des étapes (cold call, discovery call, séquence multicanale)
 
 Progression sauvegardée localement, système de points. Un seul fichier HTML, aucune dépendance.
+
+---
+
+Construit par [David Ohayon](https://www.linkedin.com/in/david-ohayon/) — en reconversion vers le métier de Sales dans la Tech.
